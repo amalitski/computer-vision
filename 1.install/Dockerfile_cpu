@@ -1,0 +1,18 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive LANG=C TZ=Europe/Moscow
+ENV TERM linux
+
+# install some basic utilities
+RUN set -xue && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends build-essential libsm6 libxext6 libxrender-dev libglib2.0-0 wget python3-dev python3-pip && \
+    rm -rf /var/lib/apt/lists/*
+
+# install libs and frameworks
+RUN pip3 install --upgrade pip && \
+    pip3 install setuptools numpy matplotlib opencv-python torch torchvision tensorflow jupyterlab
+
+WORKDIR /www
+
+CMD ["jupyter", "notebook", "--port=8080", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
