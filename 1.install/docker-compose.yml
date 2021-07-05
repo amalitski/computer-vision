@@ -1,0 +1,10 @@
+version: "3"
+services:
+  jupyter:
+    build:
+      context: ./
+      dockerfile: Dockerfile_cpu
+    expose:
+      - 8080
+    working_dir: /www
+    restart: unless-stopped
